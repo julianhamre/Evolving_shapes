@@ -19,13 +19,12 @@ class test_circle(unittest.TestCase):
         easy_c.move(45, 1)
         self.assertAlmostEqual(easy_c.x, 2**(1/2), 2)
         self.assertAlmostEqual(easy_c.y, 2**(1/2), 2)
-
-"""    
-    def test_move(self):
+ 
+    def test_move_more(self):
         self.c.move(61.2, 11)
         self.assertAlmostEqual(self.c.x, 14.1986, 2)
         self.assertAlmostEqual(self.c.y, 24.2787, 2)
-"""
+
 
 if __name__ == "__main__":
     unittest.main()
