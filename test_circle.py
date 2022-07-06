@@ -44,7 +44,19 @@ class test_circle(unittest.TestCase):
             for j in range(len(pts)):
                 self.assertAlmostEqual(pts[j], self.interval_benchmark()[j], 10) 
         
-        
+
+class test_border(unittest.TestCase):
+    
+    def setUp(self):
+        self.b = cl.border(3.2, 4, -5.4)
+    
+    def test_get_corners(self):
+        benchmark_x = [4, 7.2, 7.2, 4, 4]
+        benchmark_y = [-5.4, -5.4, -2.2, -2.2, -5.4]
+        bnchs = [benchmark_x, benchmark_y]
+        for i in range(2):
+            self.assertEqual(self.b.get_corners()[i], bnchs[i]) 
+
 
 if __name__ == "__main__":
     unittest.main()

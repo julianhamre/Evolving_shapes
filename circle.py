@@ -45,6 +45,27 @@ class circle:
         return [x, y]
 
 
+class border:
+    
+    def __init__(self, side_length, x_coordinate, y_coordinate):
+        self.side = side_length
+        
+        # coordinates for bottom left corner
+        self.x = x_coordinate
+        self.y = y_coordinate
+
+    def get_corners(self):
+        x = self.x
+        sx = self.x + self.side
+        y = self.y
+        sy = self.y + self.side
+        
+        x = [x, sx, sx, x, x]
+        y = [y, y, sy, sy, y]
+
+        return [x, y]
+
+
 class show:
         
     def movement(self, radius, all_positions):
