@@ -56,9 +56,9 @@ class border:
 
     def get_corners(self):
         x = self.x
-        sx = self.x + self.side
+        sx = x + self.side
         y = self.y
-        sy = self.y + self.side
+        sy = y + self.side
         
         x = [x, sx, sx, x, x]
         y = [y, y, sy, sy, y]
