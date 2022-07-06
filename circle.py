@@ -23,6 +23,18 @@ class circle:
         self.x += np.cos(radians_angle) * distance
         self.y += np.sin(radians_angle) * distance
 
+    def move_in_intervals(self, direction_angle, time, intervals):
+        time_points = np.linspace(0, time, intervals)
+        x = []
+        y = []
+        element_distance = time_points[1] - time_points[0]
+        for i in range(len(time_points)):
+            self.move(direction_angle, element_distance)
+            x.append(self.x)
+            y.append(self.y)
+        all_positions = [x, y]
+        return all_positions
+
     def get_points(self):
         angles = np.linspace(0, 2*np.pi, 100)
         x = []

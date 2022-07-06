@@ -31,6 +31,20 @@ class test_circle(unittest.TestCase):
         self.assertAlmostEqual(c.x, -4)
         self.assertAlmostEqual(c.y, 3.1962, 4)
 
+    def interval_benchmark(self):
+        benchmark = []
+        [benchmark.append((2**(1/2)) * i) for i in range(1, 6)]
+        return benchmark
+
+    def test_move_in_intervals(self):
+        c = cl.circle(1, 0, 0)
+        positions = c.move_in_intervals(45, 4, 5)
+        for i in range(2):
+            pts = positions[i]
+            for j in range(len(pts)):
+                self.assertAlmostEqual(pts[j], self.interval_benchmark()[j], 10) 
+        
+        
 
 if __name__ == "__main__":
     unittest.main()
