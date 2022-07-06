@@ -43,3 +43,15 @@ class circle:
             x.append(self.radius * np.cos(angle) + self.x)
             y.append(self.radius * np.sin(angle) + self.y)
         return [x, y]
+
+
+class show:
+        
+    def movement(self, radius, all_positions):
+        pts = all_positions
+        for i in range(len(pts[0])):
+            c = circle(radius, pts[0][i], pts[1][i])
+            plt.xlim(0, 20)
+            plt.ylim(0, 20)
+            plt.plot(c.get_points()[0], c.get_points()[1])
+            plt.show()
