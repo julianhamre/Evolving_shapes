@@ -45,16 +45,38 @@ class circle:
         return [x, y]
 
 
+class border:
+    
+    def __init__(self, side_length, x_coordinate, y_coordinate):
+        self.side = side_length
+        
+        # coordinates for bottom left corner
+        self.x = x_coordinate
+        self.y = y_coordinate
+
+    def get_corners(self):
+        x = self.x
+        sx = x + self.side
+        y = self.y
+        sy = y + self.side
+        
+        x = [x, sx, sx, x, x]
+        y = [y, y, sy, sy, y]
+
+        return [x, y]
+
+
 class show:
+
+    def __init__(self):
+        fig = plt.figure()
+        self.ax = fig.add_subplot()
+        plt.xlim(0, 20)
+        plt.ylim(0, 20)
+        self.ax.set_aspect("equal", adjustable="box")
         
     def movement(self, radius, all_positions):
         pts = all_positions
         for i in range(len(pts[0])):
             c = circle(radius, pts[0][i], pts[1][i])
-            fig = plt.figure()
-            ax = fig.add_subplot()
-            plt.xlim(0, 30)
-            plt.ylim(0, 30)
-            plt.plot(c.get_points()[0], c.get_points()[1])
-            ax.set_aspect("equal", adjustable="box")
-            plt.show()
+            self.ax.plot(c.get_points()[0], c.get_points()[1])
