@@ -67,15 +67,16 @@ class border:
 
 
 class show:
+
+    def __init__(self):
+        fig = plt.figure()
+        self.ax = fig.add_subplot()
+        plt.xlim(0, 20)
+        plt.ylim(0, 20)
+        self.ax.set_aspect("equal", adjustable="box")
         
     def movement(self, radius, all_positions):
         pts = all_positions
         for i in range(len(pts[0])):
             c = circle(radius, pts[0][i], pts[1][i])
-            fig = plt.figure()
-            ax = fig.add_subplot()
-            plt.xlim(0, 20)
-            plt.ylim(0, 20)
-            plt.plot(c.get_points()[0], c.get_points()[1])
-            ax.set_aspect("equal", adjustable="box")
-            plt.show()
+            self.ax.plot(c.get_points()[0], c.get_points()[1])
