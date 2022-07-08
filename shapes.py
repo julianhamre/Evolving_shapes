@@ -103,7 +103,7 @@ class interaction:
         
         return optional(False)
     
-    def leaving_angle(incomming_angle):
+    def leaving_angle(self, incomming_angle):
         return 180 - incomming_angle
 
 
