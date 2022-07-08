@@ -58,5 +58,22 @@ class test_border(unittest.TestCase):
             self.assertEqual(self.b.get_corners()[i], bnchs[i]) 
 
 
+class test_interaction(unittest.TestCase):
+    
+    def test_circle_with_border(self):
+        b = cl.border(10, 3.5, 4)
+        itr = cl.interaction()
+        
+        circles_outside = [cl.circle(1, 14.6, 7), cl.circle(2.1, 6, 15), cl.circle(1, -2, 6)]
+        
+        for i in circles_outside:
+            self.assertTrue(itr.circle_with_border(i, b))
+        
+        circles_inside = [cl.circle(1, 4.6, 5.1), cl.circle(2, 11.4, 11.9)]
+        
+        for i in circles_inside:
+            self.assertFalse(itr.circle_with_border(i, b))
+        
+
 if __name__ == "__main__":
     unittest.main()

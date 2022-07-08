@@ -66,6 +66,24 @@ class border:
         return [x, y]
 
 
+class interaction:
+    
+    def circle_with_border(self, circle, border):
+        if circle.x + circle.radius >= border.x + border.side:
+            return True
+        
+        if circle.y + circle.radius >= border.y + border.side:
+            return True
+        
+        if circle.x - circle.radius <= border.x:
+            return True
+        
+        if circle.y - circle.radius <= border.y:
+            return True
+        
+        return False
+
+
 class show:
 
     def __init__(self):
