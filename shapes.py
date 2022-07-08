@@ -102,6 +102,9 @@ class interaction:
             return vertical
         
         return optional(False)
+    
+    def leaving_angle(incomming_angle):
+        return 180 - incomming_angle
 
 
 class show:
