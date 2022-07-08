@@ -80,20 +80,28 @@ class optional:
 
 class interaction:
     
+    def true_optional_with_value(self, value):
+        op = optional(True)
+        op.set_value(value)
+        return op
+
     def circle_with_border(self, circle, border):
+        horisontal = self.true_optional_with_value(0)
+        vertical = self.true_optional_with_value(90)
+        
         if circle.x + circle.radius >= border.x + border.side:
-            return True
+            return horisontal
         
         if circle.y + circle.radius >= border.y + border.side:
-            return True
+            return vertical
         
         if circle.x - circle.radius <= border.x:
-            return True
+            return horisontal
         
         if circle.y - circle.radius <= border.y:
-            return True
+            return vertical
         
-        return False
+        return optional(False)
 
 
 class show:
