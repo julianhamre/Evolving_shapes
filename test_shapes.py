@@ -7,15 +7,15 @@ Created on Sun Jul  3 20:36:48 2022
 """
 
 import unittest
-import circle as cl
+import shapes as sh
 
 class test_circle(unittest.TestCase):
     
     def setUp(self):
-        self.c = cl.circle(1, 3.6, 5)
+        self.c = sh.circle(1, 3.6, 5)
 
     def test_move(self):
-        easy_c = cl.circle(1, 0, 0)
+        easy_c = sh.circle(1, 0, 0)
         easy_c.move(45, 1)
         self.assertAlmostEqual(easy_c.x, 2**(1/2), 2)
         self.assertAlmostEqual(easy_c.y, 2**(1/2), 2)
@@ -26,7 +26,7 @@ class test_circle(unittest.TestCase):
         self.assertAlmostEqual(self.c.y, 24.2787, 2)
 
     def test_move_large_angle(self):
-        c = cl.circle(1, -1, -2)
+        c = sh.circle(1, -1, -2)
         c.move(120, 3)
         self.assertAlmostEqual(c.x, -4)
         self.assertAlmostEqual(c.y, 3.1962, 4)
@@ -37,7 +37,7 @@ class test_circle(unittest.TestCase):
         return benchmark
 
     def test_move_in_intervals(self):
-        c = cl.circle(1, 0, 0)
+        c = sh.circle(1, 0, 0)
         positions = c.move_in_intervals(45, 4, 5)
         for i in range(2):
             pts = positions[i]
@@ -48,7 +48,7 @@ class test_circle(unittest.TestCase):
 class test_border(unittest.TestCase):
     
     def setUp(self):
-        self.b = cl.border(3.2, 4, -5.4)
+        self.b = sh.border(3.2, 4, -5.4)
     
     def test_get_corners(self):
         benchmark_x = [4, 7.2, 7.2, 4, 4]
@@ -61,15 +61,15 @@ class test_border(unittest.TestCase):
 class test_interaction(unittest.TestCase):
     
     def test_circle_with_border(self):
-        b = cl.border(10, 3.5, 4)
-        itr = cl.interaction()
+        b = sh.border(10, 3.5, 4)
+        itr = sh.interaction()
         
-        circles_outside = [cl.circle(1, 14.6, 7), cl.circle(2.1, 6, 15), cl.circle(1, -2, 6)]
+        circles_outside = [sh.circle(1, 14.6, 7), sh.circle(2.1, 6, 15), sh.circle(1, -2, 6)]
         
         for i in circles_outside:
             self.assertTrue(itr.circle_with_border(i, b))
         
-        circles_inside = [cl.circle(1, 4.6, 5.1), cl.circle(2, 11.4, 11.9)]
+        circles_inside = [sh.circle(1, 4.6, 5.1), sh.circle(2, 11.4, 11.9)]
         
         for i in circles_inside:
             self.assertFalse(itr.circle_with_border(i, b))
