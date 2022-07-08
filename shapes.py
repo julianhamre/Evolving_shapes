@@ -66,6 +66,18 @@ class border:
         return [x, y]
 
 
+class optional:
+    
+    def __init__(self, bl):
+        if isinstance(bl, bool):
+            self.bool = bl
+        else:
+            raise TypeError("input must be type bool")
+    
+    def set_value(self, value):
+        self.value = value
+    
+
 class interaction:
     
     def circle_with_border(self, circle, border):

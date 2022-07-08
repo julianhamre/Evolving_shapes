@@ -75,5 +75,18 @@ class test_interaction(unittest.TestCase):
             self.assertFalse(itr.circle_with_border(i, b))
         
 
+class test_optional(unittest.TestCase):
+
+    def test_set_value(self):
+        op = sh.optional(True)
+        with self.assertRaises(AttributeError):
+            op.value
+        op.set_value(90)
+        try:
+            op.value
+        except AttributeError:
+            self.fail("AttributeError raised after value attribute should have been set")
+
+
 if __name__ == "__main__":
     unittest.main()
