@@ -112,7 +112,15 @@ class show:
         plt.xlim(0, 20)
         plt.ylim(0, 20)
         self.ax.set_aspect("equal", adjustable="box")
-        
+    
+    def circle(self, circle):
+        pts = circle.get_points()
+        self.ax.plot(pts[0], pts[1])
+    
+    def border(self, border):
+        crns = border.get_corners()
+        self.ax.plot(crns[0], crns[1])
+    
     def movement(self, radius, all_positions):
         pts = all_positions
         for i in range(len(pts[0])):
