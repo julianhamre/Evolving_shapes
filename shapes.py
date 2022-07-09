@@ -90,16 +90,16 @@ class interaction:
         vertical = self.true_optional_with_value(90)
         
         if circle.x + circle.radius >= border.x + border.side:
-            return horisontal
+            return vertical
         
         if circle.y + circle.radius >= border.y + border.side:
-            return vertical
-        
-        if circle.x - circle.radius <= border.x:
             return horisontal
         
-        if circle.y - circle.radius <= border.y:
+        if circle.x - circle.radius <= border.x:
             return vertical
+        
+        if circle.y - circle.radius <= border.y:
+            return horisontal
         
         return optional(False)
 

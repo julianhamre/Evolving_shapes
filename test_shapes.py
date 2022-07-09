@@ -69,10 +69,16 @@ class test_interaction(unittest.TestCase):
         for i in circles_outside:
             self.assertTrue(itr.circle_with_border(i, b).bool)
         
+        directions = [90, 0]
+        
+        for i in range(2):
+            self.assertEqual(itr.circle_with_border(circles_outside[i], b).value, directions[i])
+        
         circles_inside = [sh.circle(1, 4.6, 5.1), sh.circle(2, 11.4, 11.9)]
         
         for i in circles_inside:
             self.assertFalse(itr.circle_with_border(i, b).bool)
+        
         
 
 class test_optional(unittest.TestCase):
