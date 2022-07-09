@@ -126,3 +126,28 @@ class show:
         for i in range(len(pts[0])):
             c = circle(radius, pts[0][i], pts[1][i])
             self.ax.plot(c.get_points()[0], c.get_points()[1])
+
+
+class manager:
+    time_interval = 0.1
+    angle = 30
+    itr = interaction()
+    show = show()
+    
+    def __init__(self, circle, border):
+        self.c = circle
+        self.b = border
+    
+    def emit(self, time):
+        for i in range(int(time / self.time_interval)):
+            self.show.border(self.b)
+            self.show.circle(self.c)
+            
+            border_hit = self.itr.circle_with_border(self.c, self.b)
+            if border_hit.bool:
+                if border_hit.value == 90:
+                    self.angle = 180 - self.angle
+                else:
+                    self.angle = - self.angle 
+            
+            self.c.move(self.angle, self.time_interval)

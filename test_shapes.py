@@ -94,5 +94,20 @@ class test_optional(unittest.TestCase):
             self.fail("AttributeError raised after value attribute should have been set")
 
 
+class test_manager(unittest.TestCase):
+    
+    def test_emit(self):
+        c = sh.circle(0.5, 6.2, 5)
+        b = sh.border(15.2, 2, 2)
+        m = sh.manager(c, b)
+        m.emit(17)
+        
+        circle_position = [c.x, c.y]
+        benchmark_position = [6.892820323027551, 11.599999999999978]
+        
+        for i in range(len(circle_position)):
+            self.assertAlmostEqual(circle_position[i], benchmark_position[i], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
