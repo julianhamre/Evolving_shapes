@@ -86,20 +86,20 @@ class interaction:
         return op
 
     def circle_with_border(self, circle, border):
-        horisontal = self.true_optional_with_value(0)
+        horizontal = self.true_optional_with_value(0)
         vertical = self.true_optional_with_value(90)
         
         if circle.x + circle.radius >= border.x + border.side:
             return vertical
         
         if circle.y + circle.radius >= border.y + border.side:
-            return horisontal
+            return horizontal
         
         if circle.x - circle.radius <= border.x:
             return vertical
         
         if circle.y - circle.radius <= border.y:
-            return horisontal
+            return horizontal
         
         return optional(False)
 
