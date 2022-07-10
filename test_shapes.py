@@ -64,20 +64,16 @@ class test_interaction(unittest.TestCase):
         b = sh.border(10, 3.5, 4)
         itr = sh.interaction()
         
-        circles_outside = [sh.circle(1, 14.6, 7), sh.circle(2.1, 6, 15), sh.circle(1, -2, 6)]
+        circles_outside = [sh.circle(1, 14.6, 7), sh.circle(2.1, 30, 15), sh.circle(1, 6, -2)]
+        hits = [[90], [90, 0], [0]]
         
-        for i in circles_outside:
-            self.assertTrue(itr.circle_with_border(i, b).bool)
-        
-        directions = [90, 0]
-        
-        for i in range(2):
-            self.assertEqual(itr.circle_with_border(circles_outside[i], b).value, directions[i])
+        for i in range(len(circles_outside)):
+            self.assertEqual(itr.circle_with_border(circles_outside[i], b), hits[i])
         
         circles_inside = [sh.circle(1, 4.6, 5.1), sh.circle(2, 11.4, 11.9)]
         
-        for i in circles_inside:
-            self.assertFalse(itr.circle_with_border(i, b).bool)
+        for i in range(len(circles_inside)):
+            self.assertEqual(itr.circle_with_border(circles_inside[i], b), [])
         
         
 
