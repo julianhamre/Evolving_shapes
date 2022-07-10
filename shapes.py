@@ -131,7 +131,6 @@ class show:
 
 class manager:
     time_interval = 0.1
-    angle = 30
     itr = interaction()
     show = show()
     
@@ -139,16 +138,23 @@ class manager:
         self.c = circle
         self.b = border
     
-    def emit(self, time):
-        for i in range(int(time / self.time_interval)):
+    def set_time_interval(self, interval):
+        self.time_interval = interval
+    
+    def emit(self, angle, time):
+        self.angle = angle
+        
+        for _ in range(int(time / self.time_interval)):
             self.show.border(self.b)
             self.show.circle(self.c)
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
-            if border_hit.bool:
-                if border_hit.value == 90:
-                    self.angle = 180 - self.angle
-                else:
-                    self.angle = - self.angle 
             
+            if len(border_hit) > 0:
+                if 90 in border_hit:
+                    self.angle = 180 - self.angle
+                if 0 in border_hit:
+                    self.angle = - self.angle 
+                
             self.c.move(self.angle, self.time_interval)
+

@@ -93,13 +93,14 @@ class test_optional(unittest.TestCase):
 class test_manager(unittest.TestCase):
     
     def test_emit(self):
-        c = sh.circle(0.5, 6.2, 5)
-        b = sh.border(15.2, 2, 2)
+        c = sh.circle(0.5, 9, 5)
+        b = sh.border(15, 2, 2)
         m = sh.manager(c, b)
-        m.emit(17)
+        m.set_time_interval(0.1)
+        m.emit(28, 40)
         
         circle_position = [c.x, c.y]
-        benchmark_position = [6.892820323027551, 11.599999999999978]
+        benchmark_position = [10.059537111430785, 14.389431255717867]
         
         for i in range(len(circle_position)):
             self.assertAlmostEqual(circle_position[i], benchmark_position[i], 1)
