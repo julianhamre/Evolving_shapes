@@ -64,26 +64,9 @@ class border:
         y = [y, y, sy, sy, y]
 
         return [x, y]
-
-
-class optional:
-    
-    def __init__(self, bl):
-        if isinstance(bl, bool):
-            self.bool = bl
-        else:
-            raise TypeError("input must be type bool")
-    
-    def set_value(self, value):
-        self.value = value
     
 
 class interaction:
-    
-    def true_optional_with_value(self, value):
-        op = optional(True)
-        op.set_value(value)
-        return op
 
     def circle_with_border(self, circle, border):
         horizontal = 0

@@ -74,20 +74,6 @@ class test_interaction(unittest.TestCase):
         
         for i in range(len(circles_inside)):
             self.assertEqual(itr.circle_with_border(circles_inside[i], b), [])
-        
-        
-
-class test_optional(unittest.TestCase):
-
-    def test_set_value(self):
-        op = sh.optional(True)
-        with self.assertRaises(AttributeError):
-            op.value
-        op.set_value(90)
-        try:
-            op.value
-        except AttributeError:
-            self.fail("AttributeError raised after value attribute should have been set")
 
 
 class test_manager(unittest.TestCase):
