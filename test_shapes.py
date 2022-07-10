@@ -35,15 +35,7 @@ class test_circle(unittest.TestCase):
         benchmark = []
         [benchmark.append((2**(1/2)) * i) for i in range(1, 6)]
         return benchmark
-
-    def test_move_in_intervals(self):
-        c = sh.circle(1, 0, 0)
-        positions = c.move_in_intervals(45, 4, 5)
-        for i in range(2):
-            pts = positions[i]
-            for j in range(len(pts)):
-                self.assertAlmostEqual(pts[j], self.interval_benchmark()[j], 10) 
-        
+     
 
 class test_border(unittest.TestCase):
     
