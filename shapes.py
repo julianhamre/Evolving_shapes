@@ -92,12 +92,6 @@ class show:
     def border(self, border):
         crns = border.get_corners()
         self.ax.plot(crns[0], crns[1])
-    
-    def movement(self, radius, all_positions):
-        pts = all_positions
-        for i in range(len(pts[0])):
-            c = circle(radius, pts[0][i], pts[1][i])
-            self.ax.plot(c.get_points()[0], c.get_points()[1])
 
 
 class manager:
