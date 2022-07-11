@@ -75,6 +75,7 @@ class test_manager(unittest.TestCase):
         b = sh.border(15, 2, 2)
         m = sh.manager(c, b)
         m.set_time_interval(0.1)
+        m.set_show_plot(False)
         m.emit(28, 40)
         
         circle_position = [c.x, c.y]

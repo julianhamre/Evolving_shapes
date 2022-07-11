@@ -98,6 +98,7 @@ class manager:
     time_interval = 0.1
     itr = interaction()
     show = show()
+    show_plot = True
     
     def __init__(self, circle, border):
         self.c = circle
@@ -106,12 +107,16 @@ class manager:
     def set_time_interval(self, interval):
         self.time_interval = interval
     
+    def set_show_plot(self, bool):
+        self.show_plot = bool
+    
     def emit(self, angle, time):
         self.angle = angle
         
         for _ in range(int(time / self.time_interval)):
-            self.show.border(self.b)
-            self.show.circle(self.c)
+            if self.show_plot:
+                self.show.border(self.b)
+                self.show.circle(self.c)
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
             
