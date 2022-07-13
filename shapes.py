@@ -86,8 +86,11 @@ class show:
         self.ax.set_aspect("equal", adjustable="box")
     
     def circle(self, circle):
-        pts = circle.get_points()
-        self.ax.plot(pts[0], pts[1])
+        self.plot_circle = plt.Circle((circle.x, circle.y), circle.radius)
+        self.ax.add_patch(self.plot_circle)
+    
+    def remove_circle(self):
+        self.plot_circle.remove()
     
     def border(self, border):
         crns = border.get_corners()
@@ -113,10 +116,15 @@ class manager:
     def emit(self, angle, time):
         self.angle = angle
         
+        if self.show_plot:
+            self.show.border(self.b)
+        
         for _ in range(int(time / self.time_interval)):
             if self.show_plot:
-                self.show.border(self.b)
                 self.show.circle(self.c)
+                plt.draw()
+                plt.pause(0.01)
+                self.show.remove_circle()
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
             
@@ -127,4 +135,7 @@ class manager:
                     self.angle = - self.angle 
                 
             self.c.move(self.angle, self.time_interval)
+        
+        if self.show_plot:
+            plt.show()
 
