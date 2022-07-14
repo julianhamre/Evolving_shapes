@@ -112,6 +112,13 @@ class manager:
     
     def set_show_plot(self, bool):
         self.show_plot = bool
+        
+    def border_interaciton_outcome(self, border_hit):
+        if len(border_hit) > 0:
+            if 90 in border_hit:
+                self.angle = 180 - self.angle
+            if 0 in border_hit:
+                self.angle = - self.angle 
     
     def emit(self, angle, time):
         self.angle = angle
@@ -127,13 +134,9 @@ class manager:
                 self.show.remove_circle()
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
-            
-            if len(border_hit) > 0:
-                if 90 in border_hit:
-                    self.angle = 180 - self.angle
-                if 0 in border_hit:
-                    self.angle = - self.angle 
-                
+        
+            self.border_interaciton_outcome(border_hit)    
+        
             self.c.move(self.angle, self.time_interval)
         
         if self.show_plot:
