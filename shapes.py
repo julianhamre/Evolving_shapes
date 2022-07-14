@@ -120,6 +120,12 @@ class manager:
             if 0 in border_hit:
                 self.angle = - self.angle 
     
+    def draw_and_reomve_circle(self):
+        self.show.circle(self.c)
+        plt.draw()
+        plt.pause(0.01)
+        self.show.remove_circle()
+    
     def emit(self, angle, time):
         self.angle = angle
         
@@ -128,13 +134,9 @@ class manager:
         
         for _ in range(int(time / self.time_interval)):
             if self.show_plot:
-                self.show.circle(self.c)
-                plt.draw()
-                plt.pause(0.01)
-                self.show.remove_circle()
+                self.draw_and_reomve_circle()
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
-        
             self.border_interaciton_outcome(border_hit)    
         
             self.c.move(self.angle, self.time_interval)
