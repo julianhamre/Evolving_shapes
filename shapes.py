@@ -113,14 +113,14 @@ class manager:
     def set_show_plot(self, bool):
         self.show_plot = bool
         
-    def border_interaciton_outcome(self, border_hit):
+    def __border_interaciton_outcome(self, border_hit):
         if len(border_hit) > 0:
             if 90 in border_hit:
                 self.angle = 180 - self.angle
             if 0 in border_hit:
                 self.angle = - self.angle 
     
-    def draw_and_reomve_circle(self):
+    def __draw_and_reomve_circle(self):
         self.show.circle(self.c)
         plt.draw()
         plt.pause(0.01)
@@ -134,10 +134,10 @@ class manager:
         
         for _ in range(int(time / self.time_interval)):
             if self.show_plot:
-                self.draw_and_reomve_circle()
+                self.__draw_and_reomve_circle()
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
-            self.border_interaciton_outcome(border_hit)    
+            self.__border_interaciton_outcome(border_hit)    
         
             self.c.move(self.angle, self.time_interval)
         
