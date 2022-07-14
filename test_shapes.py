@@ -17,25 +17,25 @@ class test_circle(unittest.TestCase):
     def test_move(self):
         easy_c = sh.circle(1, 0, 0)
         easy_c.move(45, 1)
-        self.assertAlmostEqual(easy_c.x, 2**(1/2), 2)
-        self.assertAlmostEqual(easy_c.y, 2**(1/2), 2)
+        self.assertAlmostEqual(easy_c.get_position()[0], 2**(1/2), 2)
+        self.assertAlmostEqual(easy_c.get_position()[1], 2**(1/2), 2)
  
     def test_move_float_parameter(self):
         self.c.move(61.2, 11)
-        self.assertAlmostEqual(self.c.x, 14.1986, 2)
-        self.assertAlmostEqual(self.c.y, 24.2787, 2)
+        self.assertAlmostEqual(self.c.get_position()[0], 14.1986, 2)
+        self.assertAlmostEqual(self.c.get_position()[1], 24.2787, 2)
 
     def test_move_large_angle(self):
         c = sh.circle(1, -1, -2)
         c.move(120, 3)
-        self.assertAlmostEqual(c.x, -4)
-        self.assertAlmostEqual(c.y, 3.1962, 4)
+        self.assertAlmostEqual(c.get_position()[0], -4)
+        self.assertAlmostEqual(c.get_position()[1], 3.1962, 4)
 
     def interval_benchmark(self):
         benchmark = []
         [benchmark.append((2**(1/2)) * i) for i in range(1, 6)]
         return benchmark
-     
+
 
 class test_border(unittest.TestCase):
     
@@ -75,10 +75,10 @@ class test_manager(unittest.TestCase):
         b = sh.border(15, 2, 2)
         m = sh.manager(c, b)
         m.set_time_interval(0.1)
-        m.set_show_plot(False)
+        m.set_show_plot(True)
         m.emit(28, 40)
         
-        circle_position = [c.x, c.y]
+        circle_position = [c.get_position()[0], c.get_position()[1]]
         benchmark_position = [10.059537111430785, 14.389431255717867]
         
         for i in range(len(circle_position)):
