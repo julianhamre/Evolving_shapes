@@ -17,6 +17,12 @@ class circle:
         self.x = x_coordinate
         self.y = y_coordinate
     
+    def set_angle(self, angle):
+        self.__angle = angle
+        
+    def get_angle(self):
+        return self.__angle
+    
     def move(self, direction_angle, time):
         distance = self.speed * time
         radians_angle = np.radians(direction_angle)
@@ -113,12 +119,12 @@ class manager:
     def set_show_plot(self, bool):
         self.__show_plot = bool
         
-    def __border_interaciton_outcome(self, border_hit):
+    def __border_interaciton_outcome(self, circle, border_hit):
         if len(border_hit) > 0:
             if 90 in border_hit:
-                self.angle = 180 - self.angle
+                circle.set_angle(180 - circle.get_angle())
             if 0 in border_hit:
-                self.angle = - self.angle 
+                circle.set_angle(- circle.get_angle())
     
     def __draw_and_reomve_circle(self):
         self.show.circle(self.c)
@@ -127,7 +133,7 @@ class manager:
         self.show.remove_circle()
     
     def emit(self, angle, time):
-        self.angle = angle
+        self.c.set_angle(angle)
         
         if self.__show_plot:
             self.show.border(self.b)
@@ -137,9 +143,9 @@ class manager:
                 self.__draw_and_reomve_circle()
             
             border_hit = self.itr.circle_with_border(self.c, self.b)
-            self.__border_interaciton_outcome(border_hit)    
+            self.__border_interaciton_outcome(self.c, border_hit)    
         
-            self.c.move(self.angle, self.time_interval)
+            self.c.move(self.c.get_angle(), self.time_interval)
         
         if self.__show_plot:
             plt.show()
