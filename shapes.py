@@ -8,7 +8,7 @@ Created on Sun Jul  3 20:30:20 2022
 
 import numpy as np
 import matplotlib.pyplot as plt
-from random import randint
+from random import uniform
 
 class circle:
     __speed = 2
@@ -179,7 +179,9 @@ class manager:
         self.__show_plot = bool
 
     def __random_position(self, radius, position_index):
-        return randint(self.__b.get_position()[position_index] + radius + 1, self.__b.get_side() - radius - 1)
+        minimum = self.__b.get_position()[position_index] + radius
+        maximum = + self.__b.get_side() - 2*radius
+        return uniform(minimum, maximum)
 
     def random_circles(self, number_of_circles):
         circles = []
@@ -188,7 +190,7 @@ class manager:
             x = self.__random_position(radius, 0)
             y = self.__random_position(radius, 1)
             c = circle(radius, x, y)
-            angle = randint(0, 360)
+            angle = uniform(0, 360)
             c.set_angle(angle)
             circles.append(c) 
         return circles
@@ -211,7 +213,6 @@ class manager:
             
             for circle in circles:
                 self.__itr.circle_with_circles(circle_index, circles)
-                
                 border_hit = self.__itr.circle_with_border(circle, self.__b)
                 self.__itr.border_outcome(circle, border_hit)
                 circle.move(circle.get_angle(), self.__time_interval)
@@ -219,12 +220,4 @@ class manager:
                 
         if self.__show_plot:
             plt.show()
-
-
-b = border(18, 1, 1)
-m = manager(b)
-#m.set_show_plot(False)
-circles = m.random_circles(10)
-m.emit(circles, 40)
-
 
