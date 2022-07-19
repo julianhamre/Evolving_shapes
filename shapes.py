@@ -132,8 +132,10 @@ class interaction:
                 c1.set_angle(0)
                 c2.set_angle(180)
 
-class show:
 
+class show:
+    __plot_circles_shown = []
+    
     def __init__(self):
         fig = plt.figure()
         self.ax = fig.add_subplot()
@@ -141,15 +143,19 @@ class show:
         plt.ylim(0, 20)
         self.ax.set_aspect("equal", adjustable="box")
     
-    def circle(self, circle):
-        x = circle.get_position()[0]
-        y = circle.get_position()[1]
-        radius = circle.get_radius()
-        self.__plot_circle = plt.Circle((x, y), radius)
-        self.ax.add_patch(self.__plot_circle)
+    def circles(self, circles):
+        for circle in circles:
+            x = circle.get_position()[0]
+            y = circle.get_position()[1]
+            radius = circle.get_radius()
+            plot_circle = plt.Circle((x, y), radius)
+            self.ax.add_patch(plot_circle)
+            self.__plot_circles_shown.append(plot_circle)
     
-    def remove_circle(self):
-        self.__plot_circle.remove()
+    def remove_circles(self):
+        for plot_circle in self.__plot_circles_shown:
+            plot_circle.remove()
+        self.__plot_circles_shown = []
     
     def border(self, border):
         crns = border.get_corners()
