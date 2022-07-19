@@ -99,7 +99,38 @@ class interaction:
             hits.append(horizontal)
         
         return hits
+    
+    def border_outcome(self, circle, border_hit):
+        if len(border_hit) > 0:
+            if 90 in border_hit:
+                circle.set_angle(180 - circle.get_angle())
+            if 0 in border_hit:
+                circle.set_angle(- circle.get_angle())
+    
+    def circle_with_circle(self, circle1, circle2):
+        pos1 = circle1.get_position()
+        pos2 = circle2.get_position()
+        
+        x_diff = pos1[0] - pos2[0]
+        y_diff = pos1[1] - pos2[1]
+        
+        center_distance = (x_diff**2 + y_diff**2)**(1/2)
+        
+        r1 = circle1.get_radius()
+        r2 = circle2.get_radius()
 
+        if center_distance <= r1 + r2:
+            return True
+        
+        return False
+    
+    def circle_with_circles(self, circle_index, circles):
+        c1 = circles[circle_index]
+        for i in range(circle_index, len(circles) - 1):
+            c2 = circles[i + 1]
+            if self.circle_with_circle(c1, c2):
+                c1.set_angle(0)
+                c2.set_angle(180)
 
 class show:
 

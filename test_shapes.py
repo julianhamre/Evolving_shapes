@@ -66,6 +66,16 @@ class test_interaction(unittest.TestCase):
         
         for i in range(len(circles_inside)):
             self.assertEqual(itr.circle_with_border(circles_inside[i], b), [])
+        
+    def test_circle_with_circle(self):
+        itr = sh.interaction()
+        circles = [sh.circle(1, 2, 2), sh.circle(2, 5, 7), sh.circle(1, 15, 7.5)]
+        interacting = [sh.circle(1, 3, 2), sh.circle(2, 5, 10.9), sh.circle(0.5, 16, 8.5)]
+        not_interacting = [sh.circle(1, 10, 2), sh.circle(2, 5, 15), sh.circle(1, 17, 9.5)]
+        
+        for i in range(len(circles)):
+            self.assertTrue(itr.circle_with_circle(circles[i], interacting[i]))
+            self.assertFalse(itr.circle_with_circle(circles[i], not_interacting[i]))
 
 
 class test_manager(unittest.TestCase):
