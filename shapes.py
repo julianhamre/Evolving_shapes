@@ -193,16 +193,19 @@ class manager:
             circles.append(c) 
         return circles
 
+    def draw_and_remove_circles(self, circles):
+        self.__show.circles(circles)
+        plt.draw()
+        plt.pause(0.01)
+        self.__show.remove_circles()
+
     def emit(self, circles, time):
         if self.__show_plot:
             self.__show.border(self.__b)
         
         for _ in range(int(time / self.__time_interval)):
             if self.__show_plot:
-                self.__show.circles(circles)
-                plt.draw()
-                plt.pause(0.01)
-                self.__show.remove_circles()
+                self.draw_and_remove_circles(circles)
             
             counter = 0
             
@@ -216,3 +219,12 @@ class manager:
                 
         if self.__show_plot:
             plt.show()
+
+
+b = border(18, 1, 1)
+m = manager(b)
+#m.set_show_plot(False)
+circles = m.random_circles(10)
+m.emit(circles, 40)
+
+
