@@ -77,16 +77,30 @@ class test_interaction(unittest.TestCase):
             self.assertTrue(itr.circle_with_circle(circles[i], interacting[i]))
             self.assertFalse(itr.circle_with_circle(circles[i], not_interacting[i]))
 
+"""
+    def test_circle_position_range(self):
+        c = sh.circle(3.2, 5, 3)
+        x_expected = [1.8, 8.2]
+        y_expected = [-0.2, 6.2]
+        all_expected = [x_expected, y_expected]
+        
+        def method(c, value):
+            return c._circle__circle_position_range(c, value)
+        
+        actual = [method(c, 0), method(c, 1)]
+        [self.assertEqual(actual[i], all_expected[i]) for i in range(len(actual))]
+"""
 
 class test_manager(unittest.TestCase):
     
     def test_emit(self):
         c = sh.circle(0.5, 9, 5)
+        c.set_angle(28)
         b = sh.border(15, 2, 2)
-        m = sh.manager(c, b)
+        m = sh.manager(b)
         m.set_time_interval(0.1)
         m.set_show_plot(True)
-        m.emit(28, 40)
+        m.emit([c], 40)
         
         circle_position = [c.get_position()[0], c.get_position()[1]]
         benchmark_position = [10.059537111430785, 14.389431255717867]

@@ -8,6 +8,7 @@ Created on Sun Jul  3 20:30:20 2022
 
 import numpy as np
 import matplotlib.pyplot as plt
+from random import randint
 
 class circle:
     __speed = 2
@@ -168,8 +169,7 @@ class manager:
     __show = show()
     __show_plot = True
     
-    def __init__(self, circle, border):
-        self.__c = circle
+    def __init__(self, border):
         self.__b = border
     
     def set_time_interval(self, interval):
@@ -177,35 +177,89 @@ class manager:
     
     def set_show_plot(self, bool):
         self.__show_plot = bool
-        
-    def __border_interaciton_outcome(self, circle, border_hit):
-        if len(border_hit) > 0:
-            if 90 in border_hit:
-                circle.set_angle(180 - circle.get_angle())
-            if 0 in border_hit:
-                circle.set_angle(- circle.get_angle())
-    
-    def __draw_and_reomve_circle(self):
-        self.__show.circle(self.__c)
-        plt.draw()
-        plt.pause(0.01)
-        self.__show.remove_circle()
-    
-    def emit(self, angle, time):
-        self.__c.set_angle(angle)
-        
+
+    def __random_position(self, radius, position_index):
+        return randint(self.__b.get_position()[position_index] + radius + 1, self.__b.get_side() - radius - 1)
+
+    def random_circles(self, number_of_circles):
+        circles = []
+        radius = 1
+        for _ in range(number_of_circles):
+            x = self.__random_position(radius, 0)
+            y = self.__random_position(radius, 1)
+            c = circle(radius, x, y)
+            angle = randint(0, 360)
+            c.set_angle(angle)
+            circles.append(c) 
+        return circles
+
+    def emit(self, circles, time):
         if self.__show_plot:
             self.__show.border(self.__b)
         
         for _ in range(int(time / self.__time_interval)):
             if self.__show_plot:
-                self.__draw_and_reomve_circle()
+                self.__show.circles(circles)
+                plt.draw()
+                plt.pause(0.01)
+                self.__show.remove_circles()
             
-            border_hit = self.__itr.circle_with_border(self.__c, self.__b)
-            self.__border_interaciton_outcome(self.__c, border_hit)    
-        
-            self.__c.move(self.__c.get_angle(), self.__time_interval)
-        
+            counter = 0
+            
+            for circle in circles:
+                self.__itr.circle_with_circles(counter, circles)
+                
+                border_hit = self.__itr.circle_with_border(circle, self.__b)
+                self.__itr.border_outcome(circle, border_hit)
+                circle.move(circle.get_angle(), self.__time_interval)
+                counter += 1
+                
         if self.__show_plot:
             plt.show()
 
+
+b = border(18, 1, 1)
+m = manager(b)
+#m.set_show_plot(False)
+circles = m.random_circles(10)
+m.emit(circles, 40)
+
+
+"""
+START OF CIRCLE INTERACTION IDEA WHICH DOES NOT WORK:
+ def __circle_position_range(self, circle, position_index):
+     pos = circle.get_position()[position_index]
+     rad = circle.get_radius()
+     minimum = pos - rad
+     maximum = pos + rad
+     return [minimum, maximum]
+ 
+ def __circle_ranges(self, circles, position_index):
+     rngs = []
+     for i in circles:
+         rngs.append(self.__circle_position_range(i, position_index))
+ 
+ def __range_overlap(self, rng1, rng2):
+     if rng1[0] < rng2[1]:
+         if rng1[0] > rng2[0]:
+             return True
+     
+     if rng1[1] > rng2[0]:
+         if rng1[1] < rng2[1]:
+             return True
+     
+     return False
+
+ def __all_overlaps(self, rngs):
+     overlapped_circles = []
+     for i in range(len(rngs)):
+         for j in range(len(rngs)):
+             if self.__range_overlap(rngs[i], rngs[j]):
+                 overlapped_circles.append([i, j])
+                 
+ 
+ def circle_with_circle(self, circles):
+     x_rngs = self.__circle_ranges(circles, 0)
+     y_rngs = self.__circle_ranges(circles, 1)
+
+"""
