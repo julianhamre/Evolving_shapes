@@ -207,15 +207,15 @@ class manager:
             if self.__show_plot:
                 self.draw_and_remove_circles(circles)
             
-            counter = 0
+            circle_index = 0
             
             for circle in circles:
-                self.__itr.circle_with_circles(counter, circles)
+                self.__itr.circle_with_circles(circle_index, circles)
                 
                 border_hit = self.__itr.circle_with_border(circle, self.__b)
                 self.__itr.border_outcome(circle, border_hit)
                 circle.move(circle.get_angle(), self.__time_interval)
-                counter += 1
+                circle_index += 1
                 
         if self.__show_plot:
             plt.show()
