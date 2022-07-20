@@ -180,7 +180,7 @@ class manager:
 
     def __random_position(self, radius, position_index):
         minimum = self.__b.get_position()[position_index] + radius
-        maximum = + self.__b.get_side() - 2*radius
+        maximum = minimum + self.__b.get_side() - 2*radius
         return uniform(minimum, maximum)
 
     def random_circles(self, number_of_circles):
@@ -220,4 +220,3 @@ class manager:
                 
         if self.__show_plot:
             plt.show()
-
