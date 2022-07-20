@@ -108,12 +108,19 @@ class interaction:
             if 0 in border_hit:
                 circle.set_angle(- circle.get_angle())
     
-    def circle_with_circle(self, circle1, circle2):
+    def __position_difference(self, circle1, circle2):
         pos1 = circle1.get_position()
         pos2 = circle2.get_position()
         
         x_diff = pos1[0] - pos2[0]
         y_diff = pos1[1] - pos2[1]
+        
+        return [x_diff, y_diff]
+    
+    def circle_with_circle(self, circle1, circle2):
+        pos_diff = self.__position_difference(circle1, circle2)
+        x_diff = pos_diff[0]
+        y_diff = pos_diff[1]
         
         center_distance = (x_diff**2 + y_diff**2)**(1/2)
         
@@ -124,6 +131,9 @@ class interaction:
             return True
         
         return False
+    
+    def circle_distance_angle(self):
+        pass
     
     def circle_with_circles(self, circle_index, circles):
         c1 = circles[circle_index]
