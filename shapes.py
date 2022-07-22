@@ -77,20 +77,20 @@ class border:
 class border_interaction:
 
     def __init__(self, border, circle):
-        self.b = border
-        self.c = circle
+        self.__b = border
+        self.__c = circle
     
     def hits(self):
         horizontal = 0
         vertical = 90
         hits = []
         
-        cx = self.c.get_position()[0]
-        cy = self.c.get_position()[1]
-        cr = self.c.get_radius()
-        bx = self.b.get_position()[0]
-        by = self.b.get_position()[1]
-        bs = self.b.get_side()
+        cx = self.__c.get_position()[0]
+        cy = self.__c.get_position()[1]
+        cr = self.__c.get_radius()
+        bx = self.__b.get_position()[0]
+        by = self.__b.get_position()[1]
+        bs = self.__b.get_side()
         
         if cx + cr >= bx + bs:
             hits.append(vertical)
@@ -109,9 +109,9 @@ class border_interaction:
     def outgoing_angle(self):
         hits = self.hits()
         if 90 in hits:
-            return 180 - self.c.get_angle()
+            return 180 - self.__c.get_angle()
         if 0 in hits:
-            return - self.c.get_angle()
+            return - self.__c.get_angle()
 
 
 class circle_interaction:
@@ -173,10 +173,10 @@ class show:
     
     def __init__(self):
         fig = plt.figure()
-        self.ax = fig.add_subplot()
+        self.__ax = fig.add_subplot()
         plt.xlim(0, 20)
         plt.ylim(0, 20)
-        self.ax.set_aspect("equal", adjustable="box")
+        self.__ax.set_aspect("equal", adjustable="box")
     
     def circles(self, circles):
         for circle in circles:
@@ -184,7 +184,7 @@ class show:
             y = circle.get_position()[1]
             radius = circle.get_radius()
             plot_circle = plt.Circle((x, y), radius)
-            self.ax.add_patch(plot_circle)
+            self.__ax.add_patch(plot_circle)
             self.__plot_circles_shown.append(plot_circle)
     
     def remove_circles(self):
@@ -194,7 +194,7 @@ class show:
     
     def border(self, border):
         crns = border.get_corners()
-        self.ax.plot(crns[0], crns[1])
+        self.__ax.plot(crns[0], crns[1])
 
 
 class manager:
@@ -208,7 +208,7 @@ class manager:
     def set_time_interval(self, interval):
         self.__time_interval = interval
     
-    def set_show_plot(self, bool):
+    def show_plot(self, bool):
         self.__show_plot = bool
 
     def __random_position(self, radius, position_index):

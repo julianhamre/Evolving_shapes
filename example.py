@@ -10,6 +10,6 @@ import shapes as sh
 
 b = sh.border(18, 1, 1)
 m = sh.manager(b)
-#m.set_show_plot(False)
+#m.show_plot(False)
 circles = m.random_circles(5)
 m.emit(circles, 20)
