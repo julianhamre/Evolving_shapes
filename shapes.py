@@ -237,11 +237,19 @@ class manager:
                 new_angles = itr.outgoing_angles()
                 c1.set_angle(new_angles[0])
                 c2.set_angle(new_angles[1])
+                
+    def __interaction_circle_with_border(self, circle):
+        itr = border_interaction(self.__b, circle)
+        hits = itr.hits()
+        if len(hits) > 0:
+            new_angle = itr.outgoing_angle()
+            circle.set_angle(new_angle)
+        circle.move(circle.get_angle(), self.__time_interval)
 
     def draw_and_remove_circles(self, circles):  # change to erase and private
         self.__show.circles(circles)
         plt.draw()
-        plt.pause(0.01)
+        plt.pause(0.02)
         self.__show.remove_circles()
 
     def emit(self, circles, time):
@@ -256,13 +264,7 @@ class manager:
             
             for circle in circles:
                 self.__interaction_circle_with_circles(circle_index, circles)
-                
-                bord_itr = border_interaction(self.__b, circle)
-                hits = bord_itr.hits()
-                if len(hits) > 0:
-                    new_angle = bord_itr.outgoing_angle()
-                    circle.set_angle(new_angle)
-                circle.move(circle.get_angle(), self.__time_interval)
+                self.__interaction_circle_with_border(circle)
                 circle_index += 1
                 
         if self.__show_plot:
