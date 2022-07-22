@@ -246,7 +246,7 @@ class manager:
             circle.set_angle(new_angle)
         circle.move(circle.get_angle(), self.__time_interval)
 
-    def draw_and_remove_circles(self, circles):  # change to erase and private
+    def __draw_and_erase_circles(self, circles):
         self.__show.circles(circles)
         plt.draw()
         plt.pause(0.02)
@@ -258,7 +258,7 @@ class manager:
         
         for _ in range(int(time / self.__time_interval)):
             if self.__show_plot:
-                self.draw_and_remove_circles(circles)
+                self.__draw_and_erase_circles(circles)
             
             circle_index = 0
             
