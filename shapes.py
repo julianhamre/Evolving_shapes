@@ -76,17 +76,21 @@ class border:
 
 class border_interaction:
 
-    def circle_with_border(self, circle, border):
+    def __init__(self, border, circle):
+        self.b = border
+        self.c = circle
+    
+    def hits(self):
         horizontal = 0
         vertical = 90
         hits = []
         
-        cx = circle.get_position()[0]
-        cy = circle.get_position()[1]
-        cr = circle.get_radius()
-        bx = border.get_position()[0]
-        by = border.get_position()[1]
-        bs = border.get_side()
+        cx = self.c.get_position()[0]
+        cy = self.c.get_position()[1]
+        cr = self.c.get_radius()
+        bx = self.b.get_position()[0]
+        by = self.b.get_position()[1]
+        bs = self.b.get_side()
         
         if cx + cr >= bx + bs:
             hits.append(vertical)
@@ -102,12 +106,12 @@ class border_interaction:
         
         return hits
     
-    def outcome(self, circle, border_hit):  # maybe make the method use circle_with_border instead of taking parameter
-        if len(border_hit) > 0:
-            if 90 in border_hit:
-                circle.set_angle(180 - circle.get_angle())
-            if 0 in border_hit:
-                circle.set_angle(- circle.get_angle())
+    def outgoing_angle(self):
+        hits = self.hits()
+        if 90 in hits:
+            return 180 - self.c.get_angle()
+        if 0 in hits:
+            return - self.c.get_angle()
 
 
 class circle_interaction:
@@ -195,7 +199,6 @@ class show:
 
 class manager:
     __time_interval = 0.1
-    __bitr = border_interaction()
     __show = show()
     __show_plot = True
     
@@ -254,8 +257,11 @@ class manager:
             for circle in circles:
                 self.__interaction_circle_with_circles(circle_index, circles)
                 
-                border_hit = self.__bitr.circle_with_border(circle, self.__b)  #change to border as object input parameter
-                self.__bitr.outcome(circle, border_hit)
+                bord_itr = border_interaction(self.__b, circle)
+                hits = bord_itr.hits()
+                if len(hits) > 0:
+                    new_angle = bord_itr.outgoing_angle()
+                    circle.set_angle(new_angle)
                 circle.move(circle.get_angle(), self.__time_interval)
                 circle_index += 1
                 
