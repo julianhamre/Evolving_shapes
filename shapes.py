@@ -12,6 +12,7 @@ from random import uniform
 
 class circle:
     __speed = 2
+    # add default angle as 0
     
     def __init__(self, radius, x_coordinate, y_coordinate):
         self.__radius = radius
@@ -30,9 +31,9 @@ class circle:
     def get_angle(self):
         return self.__angle
     
-    def move(self, direction_angle, time):
+    def move(self, direction_angle, time):  # set direction angle to the circles angle attribute
         distance = self.__speed * time
-        radians_angle = np.radians(direction_angle)
+        radians_angle = np.radians(direction_angle)  
         self.__x += np.cos(radians_angle) * distance
         self.__y += np.sin(radians_angle) * distance
 
@@ -73,7 +74,7 @@ class border:
         return [x, y]
     
 
-class interaction:
+class border_interaction:
 
     def circle_with_border(self, circle, border):
         horizontal = 0
@@ -101,48 +102,67 @@ class interaction:
         
         return hits
     
-    def border_outcome(self, circle, border_hit):
+    def outcome(self, circle, border_hit):  # maybe make the method use circle_with_border instead of taking parameter
         if len(border_hit) > 0:
             if 90 in border_hit:
                 circle.set_angle(180 - circle.get_angle())
             if 0 in border_hit:
                 circle.set_angle(- circle.get_angle())
+
+
+class circle_interaction:
     
-    def __position_difference(self, circle1, circle2):
-        pos1 = circle1.get_position()
-        pos2 = circle2.get_position()
+    def __position_difference(self):
+        pos1 = self.__c1.get_position()
+        pos2 = self.__c2.get_position()
         
-        x_diff = pos1[0] - pos2[0]
-        y_diff = pos1[1] - pos2[1]
+        x_diff = pos2[0] - pos1[0]
+        y_diff = pos2[1] - pos1[1]
         
         return [x_diff, y_diff]
     
-    def circle_with_circle(self, circle1, circle2):
-        pos_diff = self.__position_difference(circle1, circle2)
-        x_diff = pos_diff[0]
-        y_diff = pos_diff[1]
+    def __init__(self, circle1, circle2):
+        self.__c1 = circle1
+        self.__c2 = circle2
+        pos_diff = self.__position_difference()
+        self.__x_diff = pos_diff[0]
+        self.__y_diff = pos_diff[1]
         
-        center_distance = (x_diff**2 + y_diff**2)**(1/2)
+    def overlap(self):
+        center_distance = (self.__x_diff**2 + self.__y_diff**2)**(1/2)
         
-        r1 = circle1.get_radius()
-        r2 = circle2.get_radius()
+        r1 = self.__c1.get_radius()
+        r2 = self.__c2.get_radius()
 
         if center_distance <= r1 + r2:
             return True
         
         return False
     
-    def circle_distance_angle(self):
-        pass
-    
-    def circle_with_circles(self, circle_index, circles):
-        c1 = circles[circle_index]
-        for i in range(circle_index, len(circles) - 1):
-            c2 = circles[i + 1]
-            if self.circle_with_circle(c1, c2):
-                c1.set_angle(0)
-                c2.set_angle(180)
+    def __center_distance_angle(self):
+        trng = np.degrees(np.arctan(abs(self.__y_diff) / abs(self.__x_diff)))
+        if self.__x_diff > 0 and self.__y_diff > 0:
+            angle = trng
+        elif self.__x_diff < 0 and self.__y_diff > 0:
+            angle = 180 - trng
+        elif self.__x_diff < 0 and self.__y_diff < 0:
+            angle = 270 - (90 - trng)
+        elif self.__x_diff > 0 and self.__y_diff < 0:
+            angle = 360 - trng
 
+        return angle
+    
+    def outgoing_angles(self):
+        outgoing_angles = []
+        for circle in [self.__c1, self.__c2]:
+            cross_section_tangent_angle = self.__center_distance_angle() + 90
+            t_angle = cross_section_tangent_angle
+            outgoing_angles.append(2*t_angle - circle.get_angle())
+        return outgoing_angles
+    
+    def __print_circle_angs(self):
+        print("C1 ANG:", self.__c1.get_angle())
+        print("C2 ANG:", self.__c2.get_angle())
 
 class show:
     __plot_circles_shown = []
@@ -175,7 +195,7 @@ class show:
 
 class manager:
     __time_interval = 0.1
-    __itr = interaction()
+    __bitr = border_interaction()
     __show = show()
     __show_plot = True
     
@@ -205,7 +225,17 @@ class manager:
             circles.append(c) 
         return circles
 
-    def draw_and_remove_circles(self, circles):
+    def __interaction_circle_with_circles(self, circle_index, circles):
+        c1 = circles[circle_index]
+        for i in range(circle_index, len(circles) - 1):
+            c2 = circles[i + 1]
+            itr = circle_interaction(c1, c2)
+            if itr.overlap():
+                new_angles = itr.outgoing_angles()
+                c1.set_angle(new_angles[0])
+                c2.set_angle(new_angles[1])
+
+    def draw_and_remove_circles(self, circles):  # change to erase and private
         self.__show.circles(circles)
         plt.draw()
         plt.pause(0.01)
@@ -222,9 +252,10 @@ class manager:
             circle_index = 0
             
             for circle in circles:
-                self.__itr.circle_with_circles(circle_index, circles)
-                border_hit = self.__itr.circle_with_border(circle, self.__b)
-                self.__itr.border_outcome(circle, border_hit)
+                self.__interaction_circle_with_circles(circle_index, circles)
+                
+                border_hit = self.__bitr.circle_with_border(circle, self.__b)  #change to border as object input parameter
+                self.__bitr.outcome(circle, border_hit)
                 circle.move(circle.get_angle(), self.__time_interval)
                 circle_index += 1
                 

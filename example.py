@@ -11,5 +11,5 @@ import shapes as sh
 b = sh.border(18, 1, 1)
 m = sh.manager(b)
 #m.set_show_plot(False)
-circles = m.random_circles(10)
-m.emit(circles, 10)
+circles = m.random_circles(5)
+m.emit(circles, 20)
