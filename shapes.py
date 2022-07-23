@@ -11,7 +11,7 @@ import numpy as np
 
 class circle:
     __speed = 2
-    # add default angle as 0
+    __angle = 45
     
     def __init__(self, radius, x_coordinate, y_coordinate):
         self.__radius = radius
@@ -30,9 +30,9 @@ class circle:
     def get_angle(self):
         return self.__angle
     
-    def move(self, direction_angle, time):  # set direction angle to the circles angle attribute
+    def move(self, time): 
         distance = self.__speed * time
-        radians_angle = np.radians(direction_angle)  
+        radians_angle = np.radians(self.__angle)  
         self.__x += np.cos(radians_angle) * distance
         self.__y += np.sin(radians_angle) * distance
 

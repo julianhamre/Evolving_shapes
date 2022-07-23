@@ -59,7 +59,6 @@ class manager:
         if len(hits) > 0:
             new_angle = itr.outgoing_angle()
             circle.set_angle(new_angle)
-        circle.move(circle.get_angle(), self.__time_interval)
 
     def emit(self, circles, time):
         if self.__show_plot:
@@ -74,6 +73,7 @@ class manager:
             for circle in circles:
                 self.__interaction_circle_with_circles(circle_index, circles)
                 self.__interaction_circle_with_border(circle)
+                circle.move(self.__time_interval)
                 circle_index += 1
                 
         if self.__show_plot:
