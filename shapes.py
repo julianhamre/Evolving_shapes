@@ -12,6 +12,7 @@ import numpy as np
 class circle:
     __speed = 2
     __angle = 45
+    __r_angle = np.radians(__angle)
     
     def __init__(self, radius, x_coordinate, y_coordinate):
         self.__radius = radius
@@ -26,15 +27,21 @@ class circle:
     
     def set_angle(self, angle):
         self.__angle = angle
+        self.__r_angle = np.radians(angle)
         
     def get_angle(self):
         return self.__angle
     
+    def get_x_speed(self):
+        return np.cos(self.__r_angle) * self.__speed
+    
+    def get_y_speed(self):
+        return np.sin(self.__r_angle) * self.__speed
+    
     def move(self, time): 
         distance = self.__speed * time
-        radians_angle = np.radians(self.__angle)  
-        self.__x += np.cos(radians_angle) * distance
-        self.__y += np.sin(radians_angle) * distance
+        self.__x += np.cos(self.__r_angle) * distance
+        self.__y += np.sin(self.__r_angle) * distance
 
     def get_points(self):
         angles = np.linspace(0, 2*np.pi, 100)
