@@ -6,10 +6,10 @@ Created on Tue Jul 19 21:55:56 2022
 @author: julianhamre
 """
 
-import shapes as sh
+import evolving_shapes as ev
 
-b = sh.border(18, 1, 1)
-m = sh.manager(b)
+b = ev.shapes.border(18, 1, 1)
+m = ev.manager(b)
 #m.show_plot(False)
 circles = m.random_circles(5)
 m.emit(circles, 20)

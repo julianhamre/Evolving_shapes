@@ -49,52 +49,5 @@ class test_border(unittest.TestCase):
         for i in range(2):
             self.assertEqual(self.b.get_corners()[i], bnchs[i]) 
 
-
-class test_interaction(unittest.TestCase):
-    
-    def test_circle_with_border(self):
-        b = sh.border(10, 3.5, 4)
-        itr = sh.interaction()
-        
-        circles_outside = [sh.circle(1, 14.6, 7), sh.circle(2.1, 30, 15), sh.circle(1, 6, -2)]
-        hits = [[90], [90, 0], [0]]
-        
-        for i in range(len(circles_outside)):
-            self.assertEqual(itr.circle_with_border(circles_outside[i], b), hits[i])
-        
-        circles_inside = [sh.circle(1, 4.6, 5.1), sh.circle(2, 11.4, 11.9)]
-        
-        for i in range(len(circles_inside)):
-            self.assertEqual(itr.circle_with_border(circles_inside[i], b), [])
-        
-    def test_circle_with_circle(self):
-        itr = sh.interaction()
-        circles = [sh.circle(1, 2, 2), sh.circle(2, 5, 7), sh.circle(1, 15, 7.5)]
-        interacting = [sh.circle(1, 3, 2), sh.circle(2, 5, 10.9), sh.circle(0.5, 16, 8.5)]
-        not_interacting = [sh.circle(1, 10, 2), sh.circle(2, 5, 15), sh.circle(1, 17, 9.5)]
-        
-        for i in range(len(circles)):
-            self.assertTrue(itr.circle_with_circle(circles[i], interacting[i]))
-            self.assertFalse(itr.circle_with_circle(circles[i], not_interacting[i]))
-
-
-class test_manager(unittest.TestCase):
-    
-    def test_emit(self):
-        c = sh.circle(0.5, 9, 5)
-        c.set_angle(28)
-        b = sh.border(15, 2, 2)
-        m = sh.manager(b)
-        m.set_time_interval(0.1)
-        m.set_show_plot(False)
-        m.emit([c], 40)
-        
-        circle_position = [c.get_position()[0], c.get_position()[1]]
-        benchmark_position = [10.059537111430785, 14.389431255717867]
-        
-        for i in range(len(circle_position)):
-            self.assertAlmostEqual(circle_position[i], benchmark_position[i], 1)
-
-
 if __name__ == "__main__":
     unittest.main()
