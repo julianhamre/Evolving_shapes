@@ -16,18 +16,21 @@ class test_circle(unittest.TestCase):
 
     def test_move(self):
         easy_c = sh.circle(1, 0, 0)
-        easy_c.move(45, 1)
+        easy_c.set_angle(45)
+        easy_c.move(1)
         self.assertAlmostEqual(easy_c.get_position()[0], 2**(1/2), 2)
         self.assertAlmostEqual(easy_c.get_position()[1], 2**(1/2), 2)
  
     def test_move_float_parameter(self):
-        self.c.move(61.2, 11)
+        self.c.set_angle(61.2)
+        self.c.move(11)
         self.assertAlmostEqual(self.c.get_position()[0], 14.1986, 2)
         self.assertAlmostEqual(self.c.get_position()[1], 24.2787, 2)
 
     def test_move_large_angle(self):
         c = sh.circle(1, -1, -2)
-        c.move(120, 3)
+        c.set_angle(120)
+        c.move(3)
         self.assertAlmostEqual(c.get_position()[0], -4)
         self.assertAlmostEqual(c.get_position()[1], 3.1962, 4)
 
