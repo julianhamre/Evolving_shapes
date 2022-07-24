@@ -30,7 +30,7 @@ def interaction_circle_with_border(border, circle):
         circle.set_angle(new_angle)
 
 
-class random_circles:
+class _random_circles:
     
     def __init__(self, border):
         self.__b = border
@@ -67,15 +67,20 @@ class manager:
     __time_interval = 0.1
     __show = show()
     __show_plot = True
-    
-    def __init__(self, border):
-        self.__b = border
+    __b = shapes.border(18, 1, 1)
     
     def set_time_interval(self, interval):
         self.__time_interval = interval
+        
+    def set_border(self, border):
+        self.__b = border
     
     def show_plot(self, bool):
         self.__show_plot = bool
+        
+    def random_circles(self, number_of_circles):
+        rnd = _random_circles(self.__b)
+        return rnd.fabricate(number_of_circles)
 
     def emit(self, circles, time):
         if self.__show_plot:

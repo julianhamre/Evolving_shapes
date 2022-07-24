@@ -8,9 +8,8 @@ Created on Tue Jul 19 21:55:56 2022
 
 import evolving_shapes as ev
 
-b = ev.shapes.border(18, 1, 1)
-m = ev.manager(b)
+
+m = ev.manager()
 #m.show_plot(False)
-rnd = ev.random_circles(b)
-circles = rnd.fabricate(5)
+circles = m.random_circles(5)
 m.emit(circles, 20)
