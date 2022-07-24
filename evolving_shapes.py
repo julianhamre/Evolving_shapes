@@ -31,16 +31,26 @@ class manager:
         maximum = minimum + self.__b.get_side() - 2*radius
         return uniform(minimum, maximum)
 
+    def __remove_overlapping_circle(self, circles):
+        c = circles[0]
+        first_ang = c.get_angle()
+        self.__interaction_circle_with_circles(0, circles)
+        second_ang = c.get_angle()
+        if first_ang != second_ang:
+            circles.remove(c)
+        return circles
+
     def random_circles(self, number_of_circles):
         circles = []
         radius = 1
-        for _ in range(number_of_circles):
+        while len(circles) < number_of_circles:
             x = self.__random_position(radius, 0)
             y = self.__random_position(radius, 1)
             c = shapes.circle(radius, x, y)
             angle = uniform(0, 360)
             c.set_angle(angle)
-            circles.append(c) 
+            circles.insert(0, c) 
+            circles = self.__remove_overlapping_circle(circles)
         return circles
 
     def __interaction_circle_with_circles(self, circle_index, circles):
