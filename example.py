@@ -11,5 +11,6 @@ import evolving_shapes as ev
 b = ev.shapes.border(18, 1, 1)
 m = ev.manager(b)
 #m.show_plot(False)
-circles = m.random_circles(5)
+rnd = ev.random_circles(b)
+circles = rnd.fabricate(5)
 m.emit(circles, 20)
