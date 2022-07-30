@@ -24,7 +24,7 @@ class show:
             x = circle.get_position()[0]
             y = circle.get_position()[1]
             radius = circle.get_radius()
-            plot_circle = plt.Circle((x, y), radius)
+            plot_circle = plt.Circle((x, y), radius, color=circle.get_color())
             self.__ax.add_patch(plot_circle)
             self.__plot_circles_shown.append(plot_circle)
     
