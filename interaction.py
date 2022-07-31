@@ -100,6 +100,45 @@ class circle:
             outgoing_angles.append(2*t_angle - circle.get_angle())
         return outgoing_angles
     
-    def __print_circle_angs(self):
-        print("C1 ANG:", self.__c1.get_angle())
-        print("C2 ANG:", self.__c2.get_angle())
+
+class status:
+    
+    def __init__(self, circle1, circle2):
+        self.__c1 = circle1
+        self.__c2 = circle2
+    
+    def superior(self):
+        if self.__c1.get_aggressivity() > self.__c2.get_aggressivity():
+            return self.__c1
+        elif self.__c1.get_aggressivity() == self.__c2.get_aggressivity():
+            return 0
+        else:
+            return self.__c2
+        
+
+class behavior:
+    
+    def __init__(self, circle1, circle2):
+        self.__c1 = circle1
+        self.__c2 = circle2
+        self.__status = status(self.__c1, self.__c2)
+    
+    def set_new_angles(self):
+        itr = circle(self.__c1, self.__c2)
+        self.__c1.set_angle(itr.outgoing_angles()[0])
+        self.__c2.set_angle(itr.outgoing_angles()[1])
+    
+    def set_aggressivity_outcome(self):
+        if self.__status.superior() == self.__c1:
+            self.__c2.set_aggressivity(self.__c1.get_aggressivity())
+            self.__c2.set_color(self.__c1.get_color())
+        elif self.__status.superior() == self.__c2:
+            self.__c1.set_aggressivity(self.__c2.get_aggressivity())
+            self.__c1.set_color(self.__c2.get_color())
+           
+            
+    def set_all_new(self):
+        self.set_new_angles()
+        self.set_aggressivity_outcome()
+
+    

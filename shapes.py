@@ -14,6 +14,8 @@ class circle():
     _speed = 2
     _angle = 45
     _r_angle = np.radians(_angle)
+    _aggressivity = 0.0
+    # add scheduled pattern
     
     def __init__(self, radius, x_coordinate, y_coordinate):
         self._radius = radius
@@ -25,6 +27,12 @@ class circle():
     
     def set_color(self, color):
         self._color = color
+        
+    def get_aggressivity(self):
+        return self._aggressivity
+    
+    def set_aggressivity(self, aggressivity):
+        self._aggressivity = aggressivity
     
     def get_radius(self):
         return self._radius
@@ -58,27 +66,6 @@ class circle():
             x.append(self._radius * np.cos(angle) + self._x)
             y.append(self._radius * np.sin(angle) + self._y)
         return [x, y]
-
-
-class aggresive_circle(circle):
-    
-    def __init__(self, radius, x_coordinate, y_coordinate):
-        super().__init__(radius, x_coordinate, y_coordinate)
-        self._init_agg_circ_()
-            
-        
-    def _init_agg_circ_(self):
-        self._color = "red"
-        self._radius += 0
-
-    
-
-def transform_circle(circle, new_circle_class):
-    circle.__class__ = new_circle_class
-    circle._init_agg_circ_()
-    return circle
-    
-
 
 class border:
     

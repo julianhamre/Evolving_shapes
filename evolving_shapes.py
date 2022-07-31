@@ -18,11 +18,8 @@ def interaction_circle_with_circles(circle_index, circles):
         c2 = circles[i + 1]
         itr = interaction.circle(c1, c2)
         if itr.overlap():
-            shapes.transform_circle(c1, shapes.aggresive_circle)
-            shapes.transform_circle(c2, shapes.aggresive_circle)
-            new_angles = itr.outgoing_angles()
-            c1.set_angle(new_angles[0])
-            c2.set_angle(new_angles[1])
+            bh = interaction.behavior(c1, c2)
+            bh.set_all_new()
             
 def interaction_circle_with_border(border, circle):
     itr = interaction.border(border, circle)
