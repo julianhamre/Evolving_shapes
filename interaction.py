@@ -9,7 +9,7 @@ Created on Sat Jul 23 12:02:00 2022
 import numpy as np
 
 
-class border:
+class border_inter:
 
     def __init__(self, border, circle):
         self.__b = border
@@ -50,7 +50,7 @@ class border:
         return self.__c.get_angle()
 
 
-class circle:
+class circle_inter:
     
     def __position_difference(self):
         pos1 = self.__c1.get_position()
@@ -99,46 +99,43 @@ class circle:
             t_angle = cross_section_tangent_angle
             outgoing_angles.append(2*t_angle - circle.get_angle())
         return outgoing_angles
-    
 
-class status:
+
+class circle_behavior:
     
     def __init__(self, circle1, circle2):
         self.__c1 = circle1
         self.__c2 = circle2
     
-    def superior(self):
-        if self.__c1.get_aggressivity() > self.__c2.get_aggressivity():
-            return self.__c1
-        elif self.__c1.get_aggressivity() == self.__c2.get_aggressivity():
-            return 0
-        else:
-            return self.__c2
-        
-
-class behavior:
-    
-    def __init__(self, circle1, circle2):
-        self.__c1 = circle1
-        self.__c2 = circle2
-        self.__status = status(self.__c1, self.__c2)
-    
-    def set_new_angles(self):
-        itr = circle(self.__c1, self.__c2)
+    def __set_new_angles(self):
+        itr = circle_inter(self.__c1, self.__c2)
         self.__c1.set_angle(itr.outgoing_angles()[0])
         self.__c2.set_angle(itr.outgoing_angles()[1])
     
-    def set_aggressivity_outcome(self):
-        if self.__status.superior() == self.__c1:
-            self.__c2.set_aggressivity(self.__c1.get_aggressivity())
-            self.__c2.set_color(self.__c1.get_color())
-        elif self.__status.superior() == self.__c2:
-            self.__c1.set_aggressivity(self.__c2.get_aggressivity())
-            self.__c1.set_color(self.__c2.get_color())
-           
+    def __define_superior_and_inferior(self, superior, inferior):
+        self.__superior = superior
+        self.__inferior = inferior
+    
+    def __valid_superior(self):
+        if self.__c1.get_aggressivity() > self.__c2.get_aggressivity():
+            self.__define_superior_and_inferior(self.__c1, self.__c2)
+            return True
             
-    def set_all_new(self):
-        self.set_new_angles()
-        self.set_aggressivity_outcome()
+        elif self.__c1.get_aggressivity() < self.__c2.get_aggressivity():
+            self.__define_superior_and_inferior(self.__c2, self.__c1)
+            return True
+        
+        else:
+            return False
+            
+    def __consume_inferior(self):
+        self.__superior.add_area(self.__inferior.area())
+        self.__inferior.set_radius(0)
+           
+    def set_new_properties(self):
+        if self.__valid_superior():
+            self.__consume_inferior()
+        else:
+            self.__set_new_angles()
 
     

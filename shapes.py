@@ -37,6 +37,17 @@ class circle():
     def get_radius(self):
         return self._radius
     
+    def set_radius(self, radius):
+        self._radius = radius
+    
+    def area(self):
+        return np.pi*self._radius**2
+    
+    def add_area(self, area):
+        new_area = self.area() + area
+        new_radius = (new_area / np.pi)**(1/2)
+        self.set_radius(new_radius)
+    
     def get_position(self):
         return [self._x, self._y]
     

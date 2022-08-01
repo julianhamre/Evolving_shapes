@@ -16,13 +16,16 @@ def interaction_circle_with_circles(circle_index, circles):
     c1 = circles[circle_index]
     for i in range(circle_index, len(circles) - 1):
         c2 = circles[i + 1]
-        itr = interaction.circle(c1, c2)
+        itr = interaction.circle_inter(c1, c2)
         if itr.overlap():
-            bh = interaction.behavior(c1, c2)
-            bh.set_all_new()
+            cb = interaction.circle_behavior(c1, c2)
+            cb.set_new_properties()
+            for circle in [c1, c2]:
+                if circle.get_radius() == 0:
+                    circles.remove(circle)
             
 def interaction_circle_with_border(border, circle):
-    itr = interaction.border(border, circle)
+    itr = interaction.border_inter(border, circle)
     hits = itr.hits()
     if len(hits) > 0:
         new_angle = itr.outgoing_angle()
