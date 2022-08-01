@@ -19,7 +19,7 @@ class test_manager(unittest.TestCase):
         m = ev.manager()
         m.set_border(b)
         m.set_time_interval(0.1)
-        m.show_plot(False)
+        m.show_animation(False)
         m.emit([c], 40)
         
         circle_position = [c.get_position()[0], c.get_position()[1]]

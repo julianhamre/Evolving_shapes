@@ -20,13 +20,13 @@ class test_border_interaction(unittest.TestCase):
         hits = [[90], [90, 0], [0]]
         
         for i in range(len(circles_outside)):
-            itr = interaction.border(b, circles_outside[i])
+            itr = interaction.border_inter(b, circles_outside[i])
             self.assertEqual(itr.hits(), hits[i])
         
         circles_inside = [sh.circle(1, 4.6, 5.1), sh.circle(2, 11.4, 11.9)]
         
         for i in range(len(circles_inside)):
-            itr = interaction.border(b, circles_inside[i])
+            itr = interaction.border_inter(b, circles_inside[i])
             self.assertEqual(itr.hits(), [])
 
 
@@ -38,9 +38,9 @@ class test_circle_interaction(unittest.TestCase):
         not_overlapping = [sh.circle(1, 10, 2), sh.circle(2, 5, 15), sh.circle(1, 17, 9.5)]
         
         for i in range(len(circles)):
-            itr = interaction.circle(circles[i], overlapping[i])
+            itr = interaction.circle_inter(circles[i], overlapping[i])
             self.assertTrue(itr.overlap())
-            not_itr = interaction.circle(circles[i], not_overlapping[i])
+            not_itr = interaction.circle_inter(circles[i], not_overlapping[i])
             self.assertFalse(not_itr.overlap())
 
 

@@ -10,7 +10,7 @@ import evolving_shapes as ev
 
 
 m = ev.manager()
-#m.show_plot(False)
+#m.show_animation(False)
 circles = m.random_circles(5)
 aggresive_circle = ev.shapes.circle(1, 3, 3)
 aggresive_circle.set_color("red")

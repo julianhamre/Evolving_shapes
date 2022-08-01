@@ -77,7 +77,7 @@ class manager:
     def set_border(self, border):
         self.__b = border
     
-    def show_plot(self, bool):
+    def show_animation(self, bool):
         self.__show_plot = bool
         
     def random_circles(self, number_of_circles):
