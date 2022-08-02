@@ -22,12 +22,12 @@ class aggressivity_color:
         
         return rgb
     
-    def RGBA(self):
-        rgba = []
+    def RGB_float(self):
+        rgb_float = []
         for value in self.__RGB():
-            rgba.append(value / 255)
+            rgb_float.append(value / 255)
         
-        return rgba
+        return rgb_float
     
 
 class circle():
@@ -48,7 +48,7 @@ class circle():
     
     def __set_color(self):
         color = aggressivity_color(self._aggressivity)
-        self.__color = color.RGBA()
+        self.__color = color.RGB_float()
         
     def get_aggressivity(self):
         return self._aggressivity
