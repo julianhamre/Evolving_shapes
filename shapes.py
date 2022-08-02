@@ -53,8 +53,13 @@ class circle():
     def get_aggressivity(self):
         return self._aggressivity
     
+    def __check_aggressivity_validity(self):
+        if self._aggressivity > 1 or self._aggressivity < -1:
+            raise ValueError("aggressivity value must be between -1 and 1")
+    
     def set_aggressivity(self, aggressivity):
         self._aggressivity = aggressivity
+        self.__check_aggressivity_validity()
         self.__set_color()
     
     def get_radius(self):

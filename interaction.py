@@ -131,7 +131,7 @@ class circle_behavior:
     def __consume_inferior(self):
         self.__superior.add_area(self.__inferior.area())
         self.__inferior.set_radius(0)
-           
+
     def set_new_properties(self):
         if self.__valid_superior():
             self.__consume_inferior()
