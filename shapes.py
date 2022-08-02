@@ -9,6 +9,46 @@ Created on Sun Jul  3 20:30:20 2022
 import numpy as np
 
 
+class aggressivity_color:
+    
+    def __r_values(self):
+        r = []
+        r += 10 * [255]
+        darker_values = [242, 217, 191, 166, 140, 115, 89, 64, 38, 13]
+        for value in darker_values:
+            r.append(value)
+        return r
+
+    def __valid_g_and_b_values(self):
+        values = []
+        lighter_values = [242, 217, 191, 166, 140, 115, 89, 64, 38, 13]
+        for value in lighter_values:
+            values.append(value)
+        values += 10 * [0]
+        return values
+
+    def __init__(self, aggressivity_value):
+        r = self.__r_values()
+        g = b = self.__valid_g_and_b_values()
+        
+        value_index = round(aggressivity_value * 20)
+        self.__rgb = [r[value_index], g[value_index], b[value_index]]
+        
+        #print("R:", r)
+        #print("G:", g)
+        #print("B:", b)
+        #print(self.__rgb)
+        
+    def RGB(self):
+        return self.__rgb
+    
+    def RGBA(self):
+        rgba = []
+        for value in self.__rgb:
+            rgba.append(value / 255)
+        return rgba
+        
+
 class circle():
     _color = "steelblue"
     _speed = 2
@@ -21,18 +61,21 @@ class circle():
         self._radius = radius
         self._x = x_coordinate
         self._y = y_coordinate
+        self.__set_color()
     
     def get_color(self):
         return self._color
     
-    def set_color(self, color):
-        self._color = color
+    def __set_color(self):
+        color = aggressivity_color(self._aggressivity)
+        self._color = color.RGBA()
         
     def get_aggressivity(self):
         return self._aggressivity
     
     def set_aggressivity(self, aggressivity):
         self._aggressivity = aggressivity
+        self.__set_color()
     
     def get_radius(self):
         return self._radius
@@ -77,6 +120,7 @@ class circle():
             x.append(self._radius * np.cos(angle) + self._x)
             y.append(self._radius * np.sin(angle) + self._y)
         return [x, y]
+
 
 class border:
     
