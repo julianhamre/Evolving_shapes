@@ -43,11 +43,13 @@ class border_inter:
     
     def outgoing_angle(self):
         hits = self.hits()
+        angle = self.__c.get_angle()
+        
         if 90 in hits:
-            self.__c.set_angle(180 - self.__c.get_angle())
+            angle = 180 - angle
         if 0 in hits:
-            self.__c.set_angle(- self.__c.get_angle())
-        return self.__c.get_angle()
+            angle = - angle
+        return angle
 
 
 class circle_inter:
